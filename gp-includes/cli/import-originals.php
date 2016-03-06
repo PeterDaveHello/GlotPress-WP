@@ -53,7 +53,7 @@ class GP_CLI_Import_Originals extends WP_CLI_Command {
 			add_filter( 'gp_enable_add_translations_from_other_projects', '__return_false' );
 		}
 
-		list( $originals_added, $originals_existing, $originals_fuzzied, $originals_obsoleted ) = GP::$original->import_for_project( $project, $translations );
+		list( $originals_added, $originals_existing, $originals_fuzzied, $originals_obsoleted, $originals_error ) = GP::$original->import_for_project( $project, $translations );
 
 		if ( $disable_matching ) {
 			remove_filter( 'gp_enable_add_translations_from_other_projects', '__return_false' );
@@ -62,15 +62,24 @@ class GP_CLI_Import_Originals extends WP_CLI_Command {
 			remove_filter( 'gp_enable_propagate_translations_across_projects', '__return_false' );
 		}
 
-		WP_CLI::line(
-			sprintf(
-				/* translators: 1: number added, 2: number updated, 3: number fuzzied, 4: number obsoleted */
-				__( '%1$s new strings added, %2$s updated, %3$s fuzzied, and %4$s obsoleted.', 'glotpress' ),
-				$originals_added,
-				$originals_existing,
-				$originals_fuzzied,
-				$originals_obsoleted
-			)
+		$notice = sprintf(
+			/* translators: 1: number added, 2: number updated, 3: number fuzzied, 4: number obsoleted */
+			__( '%1$s new strings added, %2$s updated, %3$s fuzzied, and %4$s obsoleted.', 'glotpress' ),
+			$originals_added,
+			$originals_existing,
+			$originals_fuzzied,
+			$originals_obsoleted
 		);
+
+		if ( $originals_error ) {
+			$notice = ' ' . sprintf(
+				/* translators: %s: number of errors */
+				_n( '%s new string was not imported due to an error.', '%s new strings were not imported due to an error.', $originals_error, 'glotpress' ),
+				$originals_error
+			);
+		}
+
+		WP_CLI::line( $notice );
+
 	}
 }
