@@ -36,7 +36,7 @@ define( 'GP_WP_REQUIRED_VERSION', '4.4' );
 define( 'GP_PHP_REQUIRED_VERSION', '5.3' );
 
 // Load the plugin's translated strings.
-load_plugin_textdomain( 'glotpress' );
+load_plugin_textdomain( 'glotpress');
 
 /**
  * Adds a message if the required minimum PHP version is not detected.
@@ -48,9 +48,8 @@ load_plugin_textdomain( 'glotpress' );
 function gp_unsupported_php_version_notice() {
 	$screen = get_current_screen();
 
-	if ( 'plugins' !== $screen->id ) {
+	if( 'plugins' !== $screen->id )
 		return;
-	}
 	?>
 	<div class="notice notice-error">
 		<p style="max-width:800px;"><b><?php _e( 'GlotPress Disabled', 'glotpress' );?></b> <?php _e( '&#151; You are running an unsupported version of PHP.', 'glotpress' ); ?></p>
