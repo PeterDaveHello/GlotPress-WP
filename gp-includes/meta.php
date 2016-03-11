@@ -14,7 +14,7 @@
  *
  * @since 1.0.0
  *
- * @param string $meta_key Metadata key.
+ * @param string $key Metadata key.
  *
  * @return string
  */
@@ -79,7 +79,7 @@ function gp_get_meta( $object_type, $object_id, $meta_key = null ) {
  * @param int     $object_id   ID of the object metadata is for.
  * @param string  $meta_key    Metadata key.
  * @param mixed   $meta_value  The value to store.
- * @param string  $object_type The object type.
+ * @param string  $type        The object type.
  * @param bool    $global      Overrides the requirement of $object_id to be a number OR not empty.
  *
  * @return bool|null
